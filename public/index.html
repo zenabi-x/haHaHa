@@ -1,36 +1,66 @@
-// server.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const port = process.env.PORT || 3000;
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nodlock - the friendly web messenger</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+  <div class="nav-title"><h1>Nodlock</h1></div>
+  <div class="nav-links"><a href="#">About</a></div>
+</nav>
 
-const messages = {};
+<h2>Send</h2>
+<form id="sendForm">
+  <input type="text" id="passwordSend" placeholder="Password" required><br>
+  <textarea id="messageSend" placeholder="Your message" required></textarea><br>
+  <button type="submit">Send</button>
+</form>
 
-app.use(bodyParser.json());
-app.use(express.static(__dirname));
+<hr>
 
+<h2>Get</h2>
+<form id="getForm">
+  <input type="text" id="passwordGet" placeholder="Password" required><br>
+  <button type="submit">Get</button>
+</form>
 
-app.post('/send', (req, res) => {
-  const { password, message } = req.body;
-  if (!password || !message) {
-    return res.json({ error: 'Password and message required' });
-  }
-  messages[password] = message;
-  res.json({ msg: 'Message stored successfully!' });
+<p id="messageResult"></p>
+
+<script>
+document.getElementById('sendForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const password = document.getElementById('passwordSend').value;
+  const message = document.getElementById('messageSend').value;
+
+  fetch('/send', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ password, message })
+  })
+  .then(res => res.json())
+  .then(data => alert(data.msg || data.error))
+  .catch(err => console.error(err));
 });
 
-app.post('/get', (req, res) => {
-  const { password } = req.body;
-  if (!password) {
-    return res.json({ error: 'Password required' });
-  }
-  const message = messages[password];
-  if (!message) {
-    return res.json({ error: 'No message found for this password' });
-  }
-  res.json({ message });
-});
+document.getElementById('getForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const password = document.getElementById('passwordGet').value;
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  fetch('/get', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('messageResult').textContent = data.message || data.error;
+  })
+  .catch(err => console.error(err));
 });
+</script>
+
+<p>Powered by</p>
+<a href="https://archlinux.org"><img src="archlinux.png" alt="Arch Linux"/></a>
+</body>
+</html>
