@@ -1,27 +1,165 @@
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
+  background-color: #0d0d0d;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
   align-items: center;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
-input, textarea, button {
-  margin: 5px 0;
-  padding: 8px;
+h2, h3 {
+  color: #ff00cc;
+  text-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc;
+  font-family: 'Press Start 2P', monospace;
+  margin-top: 2rem;
+}
+
+a {
+  color: #00ffff;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+  color: #ff00cc;
+  text-shadow: 0 0 3px #ff00cc;
+}
+
+.glitch {
+  color: #fff;
+  position: relative;
+  font-weight: bold;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
   width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.glitch::before {
+  animation: glitchTop 2s infinite linear alternate-reverse;
+  color: #ff00cc;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitchBottom 2s infinite linear alternate-reverse;
+  color: #00ffff;
+  z-index: -2;
+}
+
+@keyframes glitchTop {
+  0% {
+    clip: rect(0, 9999px, 0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip: rect(10px, 9999px, 40px, 0);
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    clip: rect(85px, 9999px, 140px, 0);
+    transform: translate(2px, 2px);
+  }
+  100% {
+    clip: rect(0, 9999px, 0, 0);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitchBottom {
+  0% {
+    clip: rect(0, 9999px, 0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    clip: rect(20px, 9999px, 60px, 0);
+    transform: translate(2px, 2px);
+  }
+  20% {
+    clip: rect(60px, 9999px, 100px, 0);
+    transform: translate(-2px, -2px);
+  }
+  100% {
+    clip: rect(0, 9999px, 0, 0);
+    transform: translate(0, 0);
+  }
 }
 
 button {
+  background-color: transparent;
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  padding: 10px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
   cursor: pointer;
+  text-shadow: 0 0 3px #00ffff;
+  box-shadow: 0 0 5px #00ffff;
+  transition: 0.3s ease;
 }
 
+button:hover {
+  color: #ff00cc;
+  border-color: #ff00cc;
+  box-shadow: 0 0 10px #ff00cc;
+  text-shadow: 0 0 5px #ff00cc;
+}
+
+
+nav {
+  background-color: #0d0d0d;
+  border-bottom: 2px solid #00ffff;
+  box-shadow: 0 0 10px #00ffff88;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Press Start 2P', monospace;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav a {
+  color: #00ffff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  text-shadow: 0 0 3px #00ffff;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+nav a:hover {
+  color: #ff00cc;
+  text-shadow: 0 0 5px #ff00cc;
+}
+
+.nav-title {
+  font-size: 1rem;
+  color: #00ffff;
+  text-shadow: 0 0 3px #00ffff;
+  font-family: Tahoma;
+}
 img {
-  height: 40px;
+  width: 20%;
+  height: 20%;
+}
+img:hover {
+  opacity: 0.3;
+}
+
+input, textarea {
+  background-color: black;
+  border: 1px inset #ff00cc;
+}
+input:hover, textarea:hover {
+  background-color: black;
+  border: 1px inset #00ffff;
 }
